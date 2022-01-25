@@ -29,14 +29,14 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody playerRb;
     public Vector3 COM;
-    
+
 
     // Start is called before the first frame update
     private void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         playerRb.centerOfMass = COM;
-        
+
     }
 
     // find the corresponding visual wheel
@@ -77,12 +77,12 @@ public class PlayerController : MonoBehaviour
                 axleInfo.leftWheel.steerAngle = steering;
                 axleInfo.rightWheel.steerAngle = steering;
             }
-            if (axleInfo.isMotor )
+            if (axleInfo.isMotor)
             {
                 axleInfo.leftWheel.motorTorque = motor;
                 axleInfo.rightWheel.motorTorque = motor;
             }
-            
+
 
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);

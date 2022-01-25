@@ -36,7 +36,7 @@ public class VehicleController : MonoBehaviour
     {
         vehicleRb = GetComponent<Rigidbody>();
         vehicleRb.centerOfMass = COM;
-
+        vehicleRb.AddRelativeForce(Vector3.forward * 30000, ForceMode.Impulse);
     }
 
     // find the corresponding visual wheel
