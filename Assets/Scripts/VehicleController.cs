@@ -18,8 +18,12 @@ public class VehicleController : MonoBehaviour
     public List<AIAxleInfo> axleInfos; //the information about each individual axle
     public float maxMotorTorque; // maximum torque  the motor can apply to wheel
     public float maxSteeringAngle; // maximum steer angle the wheel can have
-    private float goingForward = 1;  // 1 make gas on vehicle, 0 no gas
+    public float goingForward = 1;  // 1 make gas on vehicle, 0 no gas
     private float turnCar;
+    private float distance = 6f;
+    private Vector3 rayOffset = new Vector3(0, 1, 3);
+    private bool isStopping;  // if car ahead need to stop
+    public Transform Pointer;
 
 
     [SerializeField] private float speed;
@@ -37,6 +41,7 @@ public class VehicleController : MonoBehaviour
         vehicleRb = GetComponent<Rigidbody>();
         vehicleRb.centerOfMass = COM;
         vehicleRb.AddRelativeForce(Vector3.forward * 30000, ForceMode.Impulse);
+
     }
 
     // find the corresponding visual wheel
@@ -87,6 +92,19 @@ public class VehicleController : MonoBehaviour
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
         }
+
+        // Now its time to Raycast
+        //Ray forwardRay = new Ray(transform.position + rayOffset, transform.forward);
+        //Debug.DrawRay(transform.position + rayOffset, transform.forward * distance, Color.yellow);
+        //RaycastHit hit;
+        //if (Physics.Raycast(forwardRay, distance))
+        //{
+            //vehicleRb.AddRelativeForce(-Vector3.forward * 50, ForceMode.Impulse);
+       //     goingForward = -1;
+        //}
+        //else { goingForward = 1; }
+
+
 
     }
 }

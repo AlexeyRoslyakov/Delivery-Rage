@@ -544,7 +544,7 @@ GameObject:
   - component: {fileID: 1276622949}
   m_Layer: 0
   m_Name: Jeep
-  m_TagString: Untagged
+  m_TagString: Vehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -667,6 +667,8 @@ MonoBehaviour:
     isSteering: 0
   maxMotorTorque: 350
   maxSteeringAngle: 35
+  goingForward: 1
+  Pointer: {fileID: 0}
   speed: 0
   rpm: 0
   COM: {x: 0, y: 0.5, z: 0}

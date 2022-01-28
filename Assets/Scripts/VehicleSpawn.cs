@@ -6,6 +6,7 @@ public class VehicleSpawn : MonoBehaviour
 {
     public GameObject[] vehiclePrefab;
     public GameObject player;
+    private GameManager gameManager;
 
     [SerializeField] private Vector3 distanceToPlayer;
     [SerializeField] private Vector3 spawnPos;
@@ -20,8 +21,12 @@ public class VehicleSpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        InvokeRepeating("SpawnRandomVehicle", spawnDelay, spawnInterval);
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        if (gameManager.isGameActive==true)
+        {
+            InvokeRepeating("SpawnRandomVehicle", spawnDelay, spawnInterval);
+        }
+        
 
     }
 
@@ -31,7 +36,7 @@ public class VehicleSpawn : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            SpawnRandomVehicle();
+            
         }
     }
 

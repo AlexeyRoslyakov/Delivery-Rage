@@ -29,6 +29,11 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody playerRb;
     public Vector3 COM;
+    public GameObject cargo;
+    private int cargoCount;
+    private GameManager gameManager;
+
+
 
 
     // Start is called before the first frame update
@@ -36,6 +41,8 @@ public class PlayerController : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody>();
         playerRb.centerOfMass = COM;
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+
 
     }
 
@@ -87,6 +94,17 @@ public class PlayerController : MonoBehaviour
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
         }
+
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        // When we hit other vehicle - player lose cargo
+        if (collision.gameObject.CompareTag("Vehicle"))
+        {
+            gameManager.CargoCount();
+
+        }
+
 
     }
 
