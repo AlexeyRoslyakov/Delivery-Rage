@@ -21,12 +21,12 @@ public class VehicleSpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        if (gameManager.isGameActive==true)
-        {
-            InvokeRepeating("SpawnRandomVehicle", spawnDelay, spawnInterval);
-        }
-        
+
+
+
+        //InvokeRepeating("SpawnRandomVehicle", spawnDelay, spawnInterval);
+
+
 
     }
 
@@ -36,11 +36,11 @@ public class VehicleSpawn : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            
+
         }
     }
 
-    void SpawnRandomVehicle()
+    public void SpawnRandomVehicle()
     {
         spawnInterval = Random.Range(0.5f, 2f);
         //Get direction
