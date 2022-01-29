@@ -28,10 +28,13 @@ public class PlayerController : MonoBehaviour
 
 
     private Rigidbody playerRb;
+    public ParticleSystem crashParticle;
+    public ParticleSystem finalCrashParticle;
     public Vector3 COM;
     public GameObject cargo;
     private int cargoCount;
     private GameManager gameManager;
+    
 
 
 
@@ -102,10 +105,19 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Vehicle"))
         {
             gameManager.CargoCount();
+            //crashParticle.Play();
 
         }
 
 
+    }
+    public void RegularCrush()
+    {
+        crashParticle.Play();
+    }
+    public void FinalCrush()
+    {
+        finalCrashParticle.Play();
     }
 
 

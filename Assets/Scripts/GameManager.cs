@@ -16,21 +16,45 @@ public class GameManager : MonoBehaviour
     public GameObject cargo;
     public bool isGameActive;
     public Button restartButton;
+    public Button startButton;
+    public Button quitButton;
+    public Image titleScreen;
+    private AudioSource playerAudio;
+    public AudioClip crashSound;
+    public AudioClip finalCrashSound;
+    public AudioClip powerupSound;
+    public AudioClip clickSound;
 
     // Start is called before the first frame update
     void Start()
     {
+        titleScreen.gameObject.SetActive(true);
+        playerAudio = GetComponent<AudioSource>();
+    }
+    public void StartGame()
+    {
         isGameActive = true;
-
+        playerAudio.PlayOneShot(clickSound, 2.0f);
+        titleScreen.gameObject.SetActive(false);
         player = GameObject.Find("Player");
 
         StartCoroutine(SpawnObjects());
 
 
-        cargoCount = 2;
+        cargoCount = 10;
         cargoCountText.text = "Cargo " + cargoCount + " / 10";
 
-        //StartCoroutine(SpawnObjects());
+    }
+    public void RestartGame()
+    {
+        playerAudio.PlayOneShot(clickSound, 2.0f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void QuitGame()
+    {
+        playerAudio.PlayOneShot(clickSound, 2.0f);
+        Application.Quit();
+
     }
 
     // Update is called once per frame
@@ -42,11 +66,16 @@ public class GameManager : MonoBehaviour
     public void CargoCount()
     {
         Debug.Log("hit vehicle");
+        playerAudio.PlayOneShot(crashSound, 1.0f);
         Instantiate(cargo);
         cargoCount--;
-        cargoCountText.text = "Cargo " + cargoCount + " / 10";
+        cargoCountText.text = "Cargo  " + cargoCount + " / 10";
+        player.GetComponent<PlayerController>().RegularCrush();
         if (cargoCount <= 0)
+            
         {
+            player.GetComponent<PlayerController>().FinalCrush();
+            playerAudio.PlayOneShot(finalCrashSound, 1.0f);
             LevelFailed();
         }
 
@@ -64,12 +93,10 @@ public class GameManager : MonoBehaviour
         while (isGameActive)
         {
             yield return new WaitForSeconds(spawnRate);
-               vehicleSpawner.GetComponent<VehicleSpawn>().SpawnRandomVehicle();
+            vehicleSpawner.GetComponent<VehicleSpawn>().SpawnRandomVehicle();
         }
     }
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-   
+
+
+
 }
