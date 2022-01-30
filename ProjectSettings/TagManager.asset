@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Vehicle
+  - Enemy
+  - Money
   layers:
   - Default
   - TransparentFX

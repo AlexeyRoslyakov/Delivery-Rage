@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private int spawnRate = 1;
     public TextMeshProUGUI cargoCountText;
     public TextMeshProUGUI failedText;
+    public TextMeshProUGUI deliveredText;
     public GameObject player;
     public GameObject vehicleSpawner;
     public GameObject cargo;
@@ -18,7 +19,9 @@ public class GameManager : MonoBehaviour
     public Button restartButton;
     public Button startButton;
     public Button quitButton;
+    public Button nextLevelButton;
     public Image titleScreen;
+    public Image passedScreen;
     private AudioSource playerAudio;
     public AudioClip crashSound;
     public AudioClip finalCrashSound;
@@ -40,9 +43,26 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(SpawnObjects());
 
-
+        cargoCountText.gameObject.SetActive(true);
         cargoCount = 10;
         cargoCountText.text = "Cargo " + cargoCount + " / 10";
+
+    }
+    public void CargoCount()
+    {
+        Debug.Log("hit vehicle");
+        playerAudio.PlayOneShot(crashSound, 1.0f);
+        Instantiate(cargo);
+        cargoCount--;
+        cargoCountText.text = "Cargo  " + cargoCount + " / 10";
+        player.GetComponent<PlayerController>().RegularCrush();
+        if (cargoCount <= 0)
+
+        {
+            player.GetComponent<PlayerController>().FinalCrush();
+            playerAudio.PlayOneShot(finalCrashSound, 1.0f);
+            LevelFailed();
+        }
 
     }
     public void RestartGame()
@@ -55,37 +75,26 @@ public class GameManager : MonoBehaviour
         playerAudio.PlayOneShot(clickSound, 2.0f);
         Application.Quit();
 
-    }
+    } 
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void CargoCount()
-    {
-        Debug.Log("hit vehicle");
-        playerAudio.PlayOneShot(crashSound, 1.0f);
-        Instantiate(cargo);
-        cargoCount--;
-        cargoCountText.text = "Cargo  " + cargoCount + " / 10";
-        player.GetComponent<PlayerController>().RegularCrush();
-        if (cargoCount <= 0)
-            
-        {
-            player.GetComponent<PlayerController>().FinalCrush();
-            playerAudio.PlayOneShot(finalCrashSound, 1.0f);
-            LevelFailed();
-        }
-
-    }
-    public void LevelFailed()
+       public void LevelFailed()
     {
         failedText.gameObject.SetActive(true);
         restartButton.gameObject.SetActive(true);
         isGameActive = false;
         vehicleSpawner.gameObject.SetActive(false);
+    }
+    public void LevelPassed()
+    {
+        passedScreen.gameObject.SetActive(true);
+        deliveredText.text = "You were only able to deliver " + cargoCount + " boxes";
+        isGameActive = false;
+        vehicleSpawner.gameObject.SetActive(false);
+    }
+    // Update is called once per frame
+    void Update()
+    {
+
     }
 
     IEnumerator SpawnObjects()

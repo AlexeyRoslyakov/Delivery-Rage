@@ -105,11 +105,18 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Vehicle"))
         {
             gameManager.CargoCount();
-            //crashParticle.Play();
+            
 
         }
 
+    }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Finish"))
+        {
+            gameManager.LevelPassed();
+        }
     }
     public void RegularCrush()
     {

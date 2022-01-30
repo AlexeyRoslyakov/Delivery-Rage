@@ -34,7 +34,7 @@ public class VehicleSpawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.H))
         {
 
         }
@@ -72,15 +72,15 @@ public class VehicleSpawn : MonoBehaviour
         {
             moveDirection = 180;
             //isOpposite = true;
-            spawnRangeA = -10.5f;
-            spawnRangeB = -5;
+            spawnRangeA = -8f;
+            spawnRangeB = -2;
         }
         else
         {
             moveDirection = 0;
             //isOpposite = false;
-            spawnRangeA = 0;
-            spawnRangeB = 5.5f;
+            spawnRangeA = 1.5f;
+            spawnRangeB = 8.5f;
         }
     }
 

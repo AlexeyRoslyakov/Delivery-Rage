@@ -24,6 +24,9 @@ public class VehicleController : MonoBehaviour
     private Vector3 rayOffset = new Vector3(0, 1, 3);
     private bool isStopping;  // if car ahead need to stop
     public Transform Pointer;
+    public ParticleSystem crashVehicleParticle;
+    public AudioClip crashVehicleSound;
+    private AudioSource playerAudio;
 
 
     [SerializeField] private float speed;
@@ -41,6 +44,8 @@ public class VehicleController : MonoBehaviour
         vehicleRb = GetComponent<Rigidbody>();
         vehicleRb.centerOfMass = COM;
         vehicleRb.AddRelativeForce(Vector3.forward * 30000, ForceMode.Impulse);
+
+        playerAudio = GetComponent<AudioSource>();
 
     }
 
@@ -99,12 +104,23 @@ public class VehicleController : MonoBehaviour
         //RaycastHit hit;
         //if (Physics.Raycast(forwardRay, distance))
         //{
-            //vehicleRb.AddRelativeForce(-Vector3.forward * 50, ForceMode.Impulse);
-       //     goingForward = -1;
+        //vehicleRb.AddRelativeForce(-Vector3.forward * 50, ForceMode.Impulse);
+        //     goingForward = -1;
         //}
         //else { goingForward = 1; }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            crashVehicleParticle.Play();
+        }
 
 
-
+    }
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Vehicle"))
+        {        
+        crashVehicleParticle.Play();
+        playerAudio.PlayOneShot(crashVehicleSound, 1.0f);
+        }
     }
 }
