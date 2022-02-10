@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     public GameObject cargo;
     private int cargoCount;
     private GameManager gameManager;
-    
+
 
 
 
@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
         }
-
+        
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -105,8 +105,14 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Vehicle"))
         {
             gameManager.CargoCount();
-            
 
+        }
+        if (collision.gameObject.CompareTag("Dummy"))
+        {
+            Rigidbody dummyRigidbody = collision.gameObject.GetComponent<Rigidbody>();
+            Vector3 awayFromPlayer = (collision.gameObject.transform.position + transform.position).normalized;// + (Vector3.up * 300f); ;
+
+            dummyRigidbody.AddForce(awayFromPlayer * 500f, ForceMode.Impulse);
         }
 
     }
@@ -127,5 +133,14 @@ public class PlayerController : MonoBehaviour
         finalCrashParticle.Play();
     }
 
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            playerRb.AddRelativeForce(new Vector3(0, 1, 1) * 10000f, ForceMode.Impulse);
+            Debug.Log("Jump");
+        }
+    }
 
 }

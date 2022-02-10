@@ -821,11 +821,6 @@ MonoBehaviour:
   maxMotorTorque: 350
   maxSteeringAngle: 30
   goingForward: 1
-  Pointer: {fileID: 0}
-  crashVehicleParticle: {fileID: 4783389340846041423}
-  crashVehicleSound: {fileID: 8300000, guid: 913d6445ee8cc4152a9c18da590ee203, type: 3}
-  speed: 0
-  rpm: 0
   COM: {x: 0, y: 1, z: 0}
 --- !u!82 &8446825448341636464
 AudioSource:
@@ -839,7 +834,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -848,7 +843,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 20
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -1211,10 +1206,5 @@ PrefabInstance:
 --- !u!4 &2290228608202453003 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4103237346511452878, guid: 6cbc21f5e9162483993a2b84b14d5ac8, type: 3}
-  m_PrefabInstance: {fileID: 2826332471513467589}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &4783389340846041423 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7303472089845130122, guid: 6cbc21f5e9162483993a2b84b14d5ac8, type: 3}
   m_PrefabInstance: {fileID: 2826332471513467589}
   m_PrefabAsset: {fileID: 0}

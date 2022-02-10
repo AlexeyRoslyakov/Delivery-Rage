@@ -20,19 +20,6 @@ public class VehicleController : MonoBehaviour
     public float maxSteeringAngle; // maximum steer angle the wheel can have
     public float goingForward = 1;  // 1 make gas on vehicle, 0 no gas
     private float turnCar;
-    private float distance = 6f;
-    private Vector3 rayOffset = new Vector3(0, 1, 3);
-    private bool isStopping;  // if car ahead need to stop
-    public Transform Pointer;
-    public ParticleSystem crashVehicleParticle;
-    public AudioClip crashVehicleSound;
-    private AudioSource playerAudio;
-
-
-    [SerializeField] private float speed;
-    [SerializeField] private float rpm;
-
-
 
     private Rigidbody vehicleRb;
     public Vector3 COM;
@@ -43,9 +30,11 @@ public class VehicleController : MonoBehaviour
     {
         vehicleRb = GetComponent<Rigidbody>();
         vehicleRb.centerOfMass = COM;
+
+        // Gives the car a boost when spawned
         vehicleRb.AddRelativeForce(Vector3.forward * 30000, ForceMode.Impulse);
 
-        playerAudio = GetComponent<AudioSource>();
+
 
     }
 
@@ -74,11 +63,6 @@ public class VehicleController : MonoBehaviour
         float motor = maxMotorTorque * goingForward;
         float steering = maxSteeringAngle * turnCar;
 
-        speed = Mathf.Round(vehicleRb.velocity.magnitude * 3.6f);
-        //speedometerText.SetText("Speed: " + speed + " kph");
-
-        rpm = (speed % 30) * 40;
-        //rpmText.SetText("RPM: " + rpm);
 
         foreach (AIAxleInfo axleInfo in axleInfos)
         {
@@ -108,19 +92,9 @@ public class VehicleController : MonoBehaviour
         //     goingForward = -1;
         //}
         //else { goingForward = 1; }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            crashVehicleParticle.Play();
-        }
+
 
 
     }
-    public void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Vehicle"))
-        {        
-        crashVehicleParticle.Play();
-        playerAudio.PlayOneShot(crashVehicleSound, 1.0f);
-        }
-    }
+
 }

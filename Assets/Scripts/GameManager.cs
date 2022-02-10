@@ -8,13 +8,14 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     private int cargoCount;
-    private int spawnRate = 1;
+    //private int spawnRate = 1;
     public TextMeshProUGUI cargoCountText;
     public TextMeshProUGUI failedText;
     public TextMeshProUGUI deliveredText;
     public GameObject player;
     public GameObject vehicleSpawner;
-    public GameObject cargo;
+    public GameObject[] cargo;
+    public GameObject levelLoader;
     public bool isGameActive;
     public Button restartButton;
     public Button startButton;
@@ -31,17 +32,22 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        titleScreen.gameObject.SetActive(true);
+        levelLoader.gameObject.SetActive(true);
         playerAudio = GetComponent<AudioSource>();
+        StartGame();
     }
     public void StartGame()
     {
+        // start fade or not at least???
+        //levelLoader.GetComponent<LevelLoader>().NextScreen();
+
         isGameActive = true;
-        playerAudio.PlayOneShot(clickSound, 2.0f);
-        titleScreen.gameObject.SetActive(false);
+        
+        //playerAudio.PlayOneShot(clickSound, 2.0f);
+
         player = GameObject.Find("Player");
 
-        StartCoroutine(SpawnObjects());
+        vehicleSpawner.gameObject.SetActive(true);
 
         cargoCountText.gameObject.SetActive(true);
         cargoCount = 10;
@@ -50,9 +56,9 @@ public class GameManager : MonoBehaviour
     }
     public void CargoCount()
     {
-        Debug.Log("hit vehicle");
+        int cargoIndex = Random.Range(0, cargo.Length);
         playerAudio.PlayOneShot(crashSound, 1.0f);
-        Instantiate(cargo);
+        Instantiate(cargo[cargoIndex]);
         cargoCount--;
         cargoCountText.text = "Cargo  " + cargoCount + " / 10";
         player.GetComponent<PlayerController>().RegularCrush();
@@ -67,6 +73,10 @@ public class GameManager : MonoBehaviour
     }
     public void RestartGame()
     {
+        // start fade or not at least???
+        levelLoader.GetComponent<LevelLoader>().NextScreen();
+
+
         playerAudio.PlayOneShot(clickSound, 2.0f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -75,10 +85,14 @@ public class GameManager : MonoBehaviour
         playerAudio.PlayOneShot(clickSound, 2.0f);
         Application.Quit();
 
-    } 
+    }
 
-       public void LevelFailed()
+    public void LevelFailed()
     {
+        // start fade or not at least???
+        levelLoader.GetComponent<LevelLoader>().NextScreen();
+
+
         failedText.gameObject.SetActive(true);
         restartButton.gameObject.SetActive(true);
         isGameActive = false;
@@ -86,26 +100,39 @@ public class GameManager : MonoBehaviour
     }
     public void LevelPassed()
     {
+        // start fade or not at least???
+
+
+        cargoCountText.gameObject.SetActive(false);
         passedScreen.gameObject.SetActive(true);
         deliveredText.text = "You were only able to deliver " + cargoCount + " boxes";
         isGameActive = false;
         vehicleSpawner.gameObject.SetActive(false);
     }
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
 
-    IEnumerator SpawnObjects()
+    /*IEnumerator SpawnObjects()
     {
         while (isGameActive)
         {
             yield return new WaitForSeconds(spawnRate);
             vehicleSpawner.GetComponent<VehicleSpawn>().SpawnRandomVehicle();
         }
-    }
+    }*/
 
+    public void LevelRotation()
+    {
+        playerAudio.PlayOneShot(clickSound, 2.0f);
+        //SceneManager.LoadScene("DR Scene2", LoadSceneMode.Single);
+        levelLoader.GetComponent<LevelLoader>().LoadNextLevel();
+
+    }
+    public void ToMenuGame()
+    {
+        playerAudio.PlayOneShot(clickSound, 2.0f);
+        SceneManager.LoadScene(0);
+
+    }
 
 
 }

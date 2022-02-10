@@ -9,6 +9,7 @@ public class Cargo : MonoBehaviour
     private Rigidbody cargoRb;
     private GameObject player;
     
+    
 
     private Vector3 offset = new Vector3(0, 2f, -2.5f);
     // Start is called before the first frame update

@@ -24,7 +24,7 @@ public class VehicleSpawn : MonoBehaviour
 
 
 
-        //InvokeRepeating("SpawnRandomVehicle", spawnDelay, spawnInterval);
+        InvokeRepeating("SpawnRandomVehicle", spawnDelay, spawnInterval);
 
 
 
